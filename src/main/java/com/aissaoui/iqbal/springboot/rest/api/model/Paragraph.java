@@ -9,31 +9,29 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.util.UUID;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
+public class Paragraph { 
 
-public class Paragraph {
-    
-    
     private String id;
     private String title;
     private String text;
     private String data;
 
+    private final Note parentNote;
 
+    public Paragraph(Note parentNote, String title, String text) {
 
-
-    
-    public Paragraph(String text) {
-        this(UUID.randomUUID().toString(),text); 
-    }
-    
-    public Paragraph(String title, String text) {
-        
         this.title = title;
         this.text = text;
+        this.parentNote = parentNote;
+
     }
 
-    public Paragraph() {
-       
+    public Note getParentNote() {
+        return parentNote;
+    }
+
+    public Paragraph(Note parentNote, String text) {
+        this(parentNote, UUID.randomUUID().toString(), text);
     }
 
     public String getId() {
@@ -59,13 +57,13 @@ public class Paragraph {
     public void setText(String text) {
         this.text = text;
     }
-     
+
     public String getData() {
         return data;
     }
 
     public void setData(String data) {
-        data = data.replace("\n", "");  
+        data = data.replace("\n", "");
         this.data = data;
     }
 
@@ -73,7 +71,5 @@ public class Paragraph {
     public String toString() {
         return "Paragraph{" + "id=" + id + ", title=" + title + ", text=" + text + ", data=" + data + '}';
     }
-    
-    
-    
+
 }

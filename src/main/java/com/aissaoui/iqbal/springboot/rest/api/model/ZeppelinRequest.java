@@ -8,6 +8,7 @@ package com.aissaoui.iqbal.springboot.rest.api.model;
 
 public class ZeppelinRequest {
     private String code;
+    private String sessionid;
 
     public String getCode() {
         return code;
@@ -15,6 +16,14 @@ public class ZeppelinRequest {
 
     public void setCode(String code) {
         this.code = code;
+    }
+
+    public String getSessionid() {
+        return sessionid;
+    }
+
+    public void setSessionid(String sessionid) {
+        this.sessionid = sessionid;
     }
 
 

@@ -28,9 +28,9 @@ public class ZeppelinController {
     public ZeppelinResult execPython(@RequestBody ZeppelinRequest request) {
         
  
-        Paragraph p = ZeppelinUtils.execParagraph(request.getCode());
-        ZeppelinResult zr = new ZeppelinResult();
-        zr.setResult(p.getData());
+        ZeppelinResult zr = ZeppelinUtils.execRequest(request);
+
+        
         
         
 
