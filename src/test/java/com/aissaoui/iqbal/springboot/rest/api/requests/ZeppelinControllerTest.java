@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hackerrank.test.utility.Order;
 import com.hackerrank.test.utility.OrderedTestRunner;
 import com.hackerrank.test.utility.TestWatchman;
+import java.util.UUID;
 import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
@@ -64,6 +65,7 @@ public class ZeppelinControllerTest {
 
         ZeppelinRequest zRequest = new ZeppelinRequest();
         zRequest.setCode("%python 1+1");
+        zRequest.setSessionid(UUID.randomUUID().toString());
         String strRequest = mapper.writeValueAsString(zRequest);
 
         ZeppelinResult zResult = new ZeppelinResult();
@@ -86,6 +88,7 @@ public class ZeppelinControllerTest {
 
         ZeppelinRequest zRequest = new ZeppelinRequest();
         zRequest.setCode("%python a=1");
+        zRequest.setSessionid("known_user1");
         String strRequest = mapper.writeValueAsString(zRequest);
 
         ZeppelinResult zResult = new ZeppelinResult();
@@ -99,15 +102,20 @@ public class ZeppelinControllerTest {
         ;
 
         Assert.assertEquals(response, strResult);
+        
+        
+ 
     }
 
     @Test
     @Order(3)
     public void testChallenge1Phase2() throws Exception {
         ObjectMapper mapper = new ObjectMapper();
-
+        
+        
         ZeppelinRequest zRequest = new ZeppelinRequest();
         zRequest.setCode("%python a+7");
+        zRequest.setSessionid("known_user1"); 
         String strRequest = mapper.writeValueAsString(zRequest);
 
         ZeppelinResult zResult = new ZeppelinResult();
@@ -121,6 +129,49 @@ public class ZeppelinControllerTest {
         ;
 
         Assert.assertEquals(response, strResult);
+    }
+    
+    
+    @Test
+    @Order(4)
+    public void testChallenge2() throws Exception {
+        ObjectMapper mapper = new ObjectMapper();
+        
+        
+        ZeppelinRequest zRequest = new ZeppelinRequest();
+        zRequest.setCode("%python ax=10");
+        zRequest.setSessionid(UUID.randomUUID().toString()); 
+        String strRequest = mapper.writeValueAsString(zRequest);
+
+        ZeppelinResult zResult = new ZeppelinResult();
+        zResult.setResult("");
+        String strResult = mapper.writeValueAsString(zResult);
+
+        String response = mockMvc.perform(
+                MockMvcRequestBuilders.get("/execute").contentType(MediaType.APPLICATION_JSON).content(strRequest))
+                .andExpect(MockMvcResultMatchers.content().json(strResult)).andExpect(MockMvcResultMatchers.status().isOk())
+                .andReturn().getResponse().getContentAsString();
+        ;
+
+        
+        zRequest = new ZeppelinRequest();
+        zRequest.setCode("%python ax+20");
+        zRequest.setSessionid(UUID.randomUUID().toString()); 
+         strRequest = mapper.writeValueAsString(zRequest);
+
+         zResult = new ZeppelinResult();
+        zResult.setResult("30");
+         strResult = mapper.writeValueAsString(zResult);
+
+         response = mockMvc.perform(
+                MockMvcRequestBuilders.get("/execute").contentType(MediaType.APPLICATION_JSON).content(strRequest))
+                .andExpect(MockMvcResultMatchers.content().json(strResult)).andExpect(MockMvcResultMatchers.status().isOk())
+                .andReturn().getResponse().getContentAsString();
+        ;
+        
+        
+        Assert.assertNotEquals(response, "30");
+        
     }
 
 }
