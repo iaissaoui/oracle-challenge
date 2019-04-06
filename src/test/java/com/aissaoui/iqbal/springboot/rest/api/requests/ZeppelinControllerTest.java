@@ -53,10 +53,9 @@ public class ZeppelinControllerTest {
     }
 
     /**
-     *
+     * testing execution of simple python commands
      * @throws Exception
      *
-     * It tests response the first task
      */
     @Test
     @Order(1)
@@ -80,7 +79,10 @@ public class ZeppelinControllerTest {
 
         Assert.assertEquals(response, strResult);
     }
-
+/**
+ * testing that variable states persist
+ * @throws Exception 
+ */
     @Test
     @Order(2)
     public void testChallenge1Phase1() throws Exception {
@@ -106,7 +108,10 @@ public class ZeppelinControllerTest {
         
  
     }
-
+/**
+ * testing second call of challenge 1
+ * @throws Exception 
+ */
     @Test
     @Order(3)
     public void testChallenge1Phase2() throws Exception {
@@ -131,7 +136,10 @@ public class ZeppelinControllerTest {
         Assert.assertEquals(response, strResult);
     }
     
-    
+    /**
+     * testing challenge 2 with two different sessions
+     * @throws Exception 
+     */
     @Test
     @Order(4)
     public void testChallenge2DifferentSessions() throws Exception {
@@ -173,7 +181,10 @@ public class ZeppelinControllerTest {
         Assert.assertEquals(response, strResult);
         
     }
-    
+    /**
+     * testing challenge 2 with the same session
+     * @throws Exception 
+     */
     @Test
     @Order(5)
     public void testChallenge2SameSession() throws Exception {
@@ -212,7 +223,6 @@ public class ZeppelinControllerTest {
                 .andReturn().getResponse().getContentAsString();
         ;
         
-        System.out.println("testChallenge2 response 2 " + response);
         Assert.assertEquals(response, strResult);
         
     }

@@ -17,8 +17,8 @@ import org.springframework.http.HttpEntity;
 import org.springframework.web.client.RestTemplate;
 
 /**
- *
- * @author aissa
+ * Zeppelin utility class to handle various calls to the rest api
+ * @author Iqbal AISSAOUI <aissaoui.iqbal@gmail.com>
  */
 public class ZeppelinUtils {
     
@@ -30,7 +30,14 @@ public class ZeppelinUtils {
         baseNoteURL = "http://localhost:8080/api/notebook/";
     }
     
-    
+    /**
+     * get or create the note where the paragraph is executed
+     * if the call is using an existing session, return the note object of that session
+     * otherwise create a new note for this session and save the mapping in the hashmap hmSessionNotes
+     * @param zRequest
+     * @return Note object of the session defined in the request
+     * 
+     */
     public static Note getSessionNote(ZeppelinRequest zRequest) {
         
         if(hmSessionNotes.get(zRequest.getSessionid()) != null){
@@ -55,7 +62,11 @@ public class ZeppelinUtils {
 
    
     }
-
+/**
+ * searchs for the note mapped to the current session and creates a paragraph in that note
+ * @param zRequest
+ * @return 
+ */
     public static Paragraph getParagraph(ZeppelinRequest zRequest) {
         Note sessionNote = getSessionNote(zRequest);
         String baseParagraphURL = baseNoteURL + sessionNote.getId() + "/paragraph";
@@ -68,7 +79,11 @@ public class ZeppelinUtils {
         p.setId(flattenJson.get("body").toString());
         return p;
     }
-    
+    /**
+     * instructs Apache Zeppelin to run a specific paragraph
+     * @param zRequest
+     * @return 
+     */
     public static Paragraph runParagraph(ZeppelinRequest zRequest) {
         
         Note sessionNote = getSessionNote(zRequest);
@@ -84,7 +99,12 @@ public class ZeppelinUtils {
     }
 
         
-
+    /**
+     * executes the incoming request
+     * @param zr
+     * @return
+     * @throws Exception 
+     */
     public static ZeppelinResult execRequest(ZeppelinRequest zr) throws Exception{
         
         Paragraph p = getParagraph(zr);

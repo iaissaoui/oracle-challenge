@@ -6,7 +6,10 @@
 package com.aissaoui.iqbal.springboot.rest.api.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
+/**
+ * Rest mapping of the result
+ * @author Iqbal AISSAOUI <aissaoui.iqbal@gmail.com>
+ */
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class ZeppelinResult {
     private String result;

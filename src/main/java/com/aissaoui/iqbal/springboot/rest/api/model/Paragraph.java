@@ -7,7 +7,10 @@ package com.aissaoui.iqbal.springboot.rest.api.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.util.UUID;
-
+/**
+ * Representation of the Zeppelin paragraph
+ * @author Iqbal AISSAOUI <aissaoui.iqbal@gmail.com>
+ */
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Paragraph { 
 

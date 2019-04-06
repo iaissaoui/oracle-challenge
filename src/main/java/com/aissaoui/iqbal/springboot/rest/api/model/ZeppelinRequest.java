@@ -5,7 +5,10 @@
  */
 package com.aissaoui.iqbal.springboot.rest.api.model;
 
-
+/**
+ * Rest mapping of the request
+ * @author Iqbal AISSAOUI <aissaoui.iqbal@gmail.com>
+ */
 public class ZeppelinRequest {
     private String code;
     private String sessionid;

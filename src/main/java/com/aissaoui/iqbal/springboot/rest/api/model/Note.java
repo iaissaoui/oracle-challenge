@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.UUID;
 
 /**
- *
+ * Representation of the Zeppelin Note
  * @author Iqbal AISSAOUI <aissaoui.iqbal@gmail.com>
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
