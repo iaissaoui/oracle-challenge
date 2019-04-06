@@ -85,7 +85,7 @@ public class ZeppelinUtils {
 
         
 
-    public static ZeppelinResult execRequest(ZeppelinRequest zr) {
+    public static ZeppelinResult execRequest(ZeppelinRequest zr) throws Exception{
         
         Paragraph p = getParagraph(zr);
         RestTemplate restTemplate = new RestTemplate();

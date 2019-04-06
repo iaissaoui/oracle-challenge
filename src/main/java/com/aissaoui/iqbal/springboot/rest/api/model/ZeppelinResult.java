@@ -5,7 +5,9 @@
  */
 package com.aissaoui.iqbal.springboot.rest.api.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class ZeppelinResult {
     private String result;
 

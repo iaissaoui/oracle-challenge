@@ -134,7 +134,7 @@ public class ZeppelinControllerTest {
     
     @Test
     @Order(4)
-    public void testChallenge2() throws Exception {
+    public void testChallenge2DifferentSessions() throws Exception {
         ObjectMapper mapper = new ObjectMapper();
         
         
@@ -157,10 +157,10 @@ public class ZeppelinControllerTest {
         zRequest = new ZeppelinRequest();
         zRequest.setCode("%python ax+20");
         zRequest.setSessionid(UUID.randomUUID().toString()); 
-         strRequest = mapper.writeValueAsString(zRequest);
+        strRequest = mapper.writeValueAsString(zRequest);
 
          zResult = new ZeppelinResult();
-        zResult.setResult("30");
+         zResult.setResult("Zeppelin has failed!");
          strResult = mapper.writeValueAsString(zResult);
 
          response = mockMvc.perform(
@@ -169,8 +169,51 @@ public class ZeppelinControllerTest {
                 .andReturn().getResponse().getContentAsString();
         ;
         
+        System.out.println("testChallenge2 response 2 " + response);
+        Assert.assertEquals(response, strResult);
         
-        Assert.assertNotEquals(response, "30");
+    }
+    
+    @Test
+    @Order(5)
+    public void testChallenge2SameSession() throws Exception {
+        ObjectMapper mapper = new ObjectMapper();
+        
+        String session = UUID.randomUUID().toString();
+        
+        ZeppelinRequest zRequest = new ZeppelinRequest();
+        zRequest.setCode("%python ax=10");
+        zRequest.setSessionid(session); 
+        String strRequest = mapper.writeValueAsString(zRequest);
+
+        ZeppelinResult zResult = new ZeppelinResult();
+        zResult.setResult("");
+        String strResult = mapper.writeValueAsString(zResult);
+
+        String response = mockMvc.perform(
+                MockMvcRequestBuilders.get("/execute").contentType(MediaType.APPLICATION_JSON).content(strRequest))
+                .andExpect(MockMvcResultMatchers.content().json(strResult)).andExpect(MockMvcResultMatchers.status().isOk())
+                .andReturn().getResponse().getContentAsString();
+        ;
+
+        
+        zRequest = new ZeppelinRequest();
+        zRequest.setCode("%python ax+20");
+        zRequest.setSessionid(session);  
+        strRequest = mapper.writeValueAsString(zRequest);
+
+         zResult = new ZeppelinResult();
+         zResult.setResult("30");
+         strResult = mapper.writeValueAsString(zResult);
+
+         response = mockMvc.perform(
+                MockMvcRequestBuilders.get("/execute").contentType(MediaType.APPLICATION_JSON).content(strRequest))
+                .andExpect(MockMvcResultMatchers.content().json(strResult)).andExpect(MockMvcResultMatchers.status().isOk())
+                .andReturn().getResponse().getContentAsString();
+        ;
+        
+        System.out.println("testChallenge2 response 2 " + response);
+        Assert.assertEquals(response, strResult);
         
     }
 
