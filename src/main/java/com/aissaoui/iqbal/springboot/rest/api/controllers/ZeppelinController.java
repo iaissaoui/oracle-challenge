@@ -17,24 +17,24 @@ public class ZeppelinController {
 	/**
 	 * create a paragraph in apache Zeppelin, run it, and return the result
 	 * 
-	 * @param request
-	 * @return
+	 * @param zRequest ZeppelinRequest, the mapping of the json request
+	 * @return ZeppelinResult, the mapping of the json response
 	 */
 	@GetMapping(value = "/execute", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
-	public ZeppelinResult execPython(@RequestBody ZeppelinRequest request) {
+	public ZeppelinResult execPython(@RequestBody ZeppelinRequest zRequest) {
 
-		ZeppelinResult zr;
+		ZeppelinResult zResult;
 		try {
-			zr = ZeppelinUtils.execRequest(request);
+			zResult = ZeppelinUtils.execRequest(zRequest);
 		} catch (Exception ex) {
 
-			zr = new ZeppelinResult();
-			zr.setResult("Zeppelin has failed!");
+			zResult = new ZeppelinResult();
+			zResult.setResult("Zeppelin has failed!");
 
 		}
 
-		return zr;
+		return zResult;
 	}
 }

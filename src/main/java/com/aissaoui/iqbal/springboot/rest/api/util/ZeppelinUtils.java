@@ -41,7 +41,7 @@ public class ZeppelinUtils {
 	 * a new note for this session and save the mapping in the hashmap
 	 * hmSessionNotes
 	 * 
-	 * @param zRequest
+	 * @param zRequest Mapping of the json request
 	 * @return Note object of the session defined in the request
 	 * 
 	 */
@@ -73,8 +73,8 @@ public class ZeppelinUtils {
 	 * searchs for the note mapped to the current session and creates a paragraph in
 	 * that note
 	 * 
-	 * @param zRequest
-	 * @return
+	 * @param zRequest Mapping of the json request
+	 * @return the paragraph object for this session's note
 	 */
 	public static Paragraph getParagraph(ZeppelinRequest zRequest) {
 		Note sessionNote = getSessionNote(zRequest);
@@ -92,13 +92,13 @@ public class ZeppelinUtils {
 	/**
 	 * executes the incoming request
 	 * 
-	 * @param zr
-	 * @return
-	 * @throws Exception
+	 * @param zRequest Mapping of the json request
+	 * @return Mapping of the json response
+	 * @throws Exception in case the call to the Zeppelin API fails
 	 */
-	public static ZeppelinResult execRequest(ZeppelinRequest zr) throws Exception {
+	public static ZeppelinResult execRequest(ZeppelinRequest zRequest) throws Exception {
 
-		Paragraph p = getParagraph(zr);
+		Paragraph p = getParagraph(zRequest);
 		RestTemplate restTemplate = new RestTemplate();
 		String baseParagraphURL = baseNoteURL + "/run/" + p.getParentNote().getId() + "/" + p.getId();
 		HttpEntity<Paragraph> paragraphEntity = new HttpEntity<>(p);

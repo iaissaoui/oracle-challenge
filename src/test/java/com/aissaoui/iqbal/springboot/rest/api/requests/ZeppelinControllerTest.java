@@ -53,13 +53,13 @@ public class ZeppelinControllerTest {
     }
 
     /**
-     * testing execution of simple python commands
+     * Task 1: testing execution of simple python commands
      * @throws Exception
      *
      */
     @Test
     @Order(1)
-    public void testTask() throws Exception {
+    public void testTask1() throws Exception {
         ObjectMapper mapper = new ObjectMapper();
 
         ZeppelinRequest zRequest = new ZeppelinRequest();
@@ -80,12 +80,12 @@ public class ZeppelinControllerTest {
         Assert.assertEquals(response, strResult);
     }
 /**
- * testing that variable states persist
+ * Challenge 1: tests that variable states persist
  * @throws Exception 
  */
     @Test
     @Order(2)
-    public void testChallenge1Phase1() throws Exception {
+    public void testChallenge1() throws Exception {
         ObjectMapper mapper = new ObjectMapper();
 
         ZeppelinRequest zRequest = new ZeppelinRequest();
@@ -105,49 +105,40 @@ public class ZeppelinControllerTest {
 
         Assert.assertEquals(response, strResult);
         
-        
- 
-    }
-/**
- * testing second call of challenge 1
- * @throws Exception 
- */
-    @Test
-    @Order(3)
-    public void testChallenge1Phase2() throws Exception {
-        ObjectMapper mapper = new ObjectMapper();
+         mapper = new ObjectMapper();
         
         
-        ZeppelinRequest zRequest = new ZeppelinRequest();
+         zRequest = new ZeppelinRequest();
         zRequest.setCode("%python a+7");
         zRequest.setSessionid("known_user1"); 
-        String strRequest = mapper.writeValueAsString(zRequest);
+         strRequest = mapper.writeValueAsString(zRequest);
 
-        ZeppelinResult zResult = new ZeppelinResult();
+         zResult = new ZeppelinResult();
         zResult.setResult("8");
-        String strResult = mapper.writeValueAsString(zResult);
+         strResult = mapper.writeValueAsString(zResult);
 
-        String response = mockMvc.perform(
+         response = mockMvc.perform(
                 MockMvcRequestBuilders.get("/execute").contentType(MediaType.APPLICATION_JSON).content(strRequest))
                 .andExpect(MockMvcResultMatchers.content().json(strResult)).andExpect(MockMvcResultMatchers.status().isOk())
                 .andReturn().getResponse().getContentAsString();
         ;
 
         Assert.assertEquals(response, strResult);
+        
+ 
     }
-    
     /**
-     * testing challenge 2 with two different sessions
+     * Challenge 2: tests that different sessions do not have access to the same variables
      * @throws Exception 
      */
     @Test
-    @Order(4)
+    @Order(3)
     public void testChallenge2DifferentSessions() throws Exception {
         ObjectMapper mapper = new ObjectMapper();
         
         
         ZeppelinRequest zRequest = new ZeppelinRequest();
-        zRequest.setCode("%python ax=10");
+        zRequest.setCode("%python a=10");
         zRequest.setSessionid(UUID.randomUUID().toString()); 
         String strRequest = mapper.writeValueAsString(zRequest);
 
@@ -163,7 +154,7 @@ public class ZeppelinControllerTest {
 
         
         zRequest = new ZeppelinRequest();
-        zRequest.setCode("%python ax+20");
+        zRequest.setCode("%python a+20");
         zRequest.setSessionid(UUID.randomUUID().toString()); 
         strRequest = mapper.writeValueAsString(zRequest);
 
@@ -182,18 +173,18 @@ public class ZeppelinControllerTest {
         
     }
     /**
-     * testing challenge 2 with the same session
+     * Challenge 2: tests that calls from the same session have access to the same variables
      * @throws Exception 
      */
     @Test
-    @Order(5)
+    @Order(4)
     public void testChallenge2SameSession() throws Exception {
         ObjectMapper mapper = new ObjectMapper();
         
         String session = UUID.randomUUID().toString();
         
         ZeppelinRequest zRequest = new ZeppelinRequest();
-        zRequest.setCode("%python ax=10");
+        zRequest.setCode("%python a=10");
         zRequest.setSessionid(session); 
         String strRequest = mapper.writeValueAsString(zRequest);
 
@@ -207,9 +198,10 @@ public class ZeppelinControllerTest {
                 .andReturn().getResponse().getContentAsString();
         ;
 
+        Assert.assertEquals(response, strResult);
         
         zRequest = new ZeppelinRequest();
-        zRequest.setCode("%python ax+20");
+        zRequest.setCode("%python a+20");
         zRequest.setSessionid(session);  
         strRequest = mapper.writeValueAsString(zRequest);
 

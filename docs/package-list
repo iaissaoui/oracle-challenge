@@ -1,0 +1,4 @@
+com.aissaoui.iqbal.springboot.rest.api
+com.aissaoui.iqbal.springboot.rest.api.controllers
+com.aissaoui.iqbal.springboot.rest.api.model
+com.aissaoui.iqbal.springboot.rest.api.util
