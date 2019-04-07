@@ -6,49 +6,42 @@
 package com.aissaoui.iqbal.springboot.rest.api.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.UUID;
 
 /**
  * Representation of the Zeppelin Note
+ * 
  * @author Iqbal AISSAOUI <aissaoui.iqbal@gmail.com>
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Note {
-    
 
-    private String id;
-    private String name;
+	private String id;
+	private String name;
 
-    
-    public Note() {
-       this.name = UUID.randomUUID().toString();
-    }
- 
-    public String getId() {
-        return id;
-    }
+	public Note() {
+		this.name = UUID.randomUUID().toString();
+	}
 
-    public void setId(String id) {
-        this.id = id;
-    }
+	public String getId() {
+		return id;
+	}
 
-    public String getName() {
-        return name;
-    }
+	public void setId(String id) {
+		this.id = id;
+	}
 
-    public void setName(String name) {
-        this.name = name;
-    }
+	public String getName() {
+		return name;
+	}
 
-    @Override
-    public String toString() {
-        return "Note{" + "id=" + id + ", name=" + name + '}';
-    }
-    
-    
-    
-    
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	@Override
+	public String toString() {
+		return "Note{" + "id=" + id + ", name=" + name + '}';
+	}
+
 }
